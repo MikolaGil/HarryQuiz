@@ -14,22 +14,29 @@ namespace Harry_telegram
         {
             bot = new TelegramBotClient("1024216247:AAElTDvwfbrfzeHu8Zy9fIW2PEnjdp1XTfw");
             bot.StartReceiving();
-
             bot.OnMessage += Start;
+            
             Console.ReadLine();
 
             bot.StopReceiving();
         }
 
-        private static async void Start(object sender, MessageEventArgs ev)
+        public static async void Start(object sender, MessageEventArgs ev)
         {
-            bot.OnMessage -= Start;
-
             Message message = ev.Message;
             userName = message.From.FirstName;
             chatId = message.From.Id;
 
-            Adventure.StartAdventure(chatId);
+            if (message.Text.Equals("/startus"))
+            {
+                bot.OnMessage -= Start;
+                Adventure.StartAdventure(chatId);
+
+            }
+            else
+            {
+                await Dialog.SendMessage(ev.Message.From.Id, "Команды чата:\n /startus - начать приключение\n /help - помощь");
+            }
         }
     }
 }

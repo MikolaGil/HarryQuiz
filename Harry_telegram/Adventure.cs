@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.ReplyMarkups;
 
@@ -76,7 +71,7 @@ namespace Harry_telegram
 
             if (message.Equals("apistogramma panduro"))
             {
-                await Dialog.SendMessage(Program.chatId, "Думаю это название какого-то существа, которое даст тебе подсказку. Возможно всезнающий гугл поможет тебе...");
+                await Dialog.SendMessage(Program.chatId, "Думаю это название какого-то существа, которое даст тебе подсказку.");
 
                 Program.bot.OnMessage -= SecondAnswer;
                 ThirdQuestion();
@@ -98,7 +93,7 @@ namespace Harry_telegram
 
             if (message.Equals("буль-буль-ом-ом"))
             {
-                await Dialog.SendMessage(Program.chatId, "Я знаю эту фразу 'Книга - друг одинокого, а библиотека убежище бездомного'.");
+                await Dialog.SendMessage(Program.chatId, "Я знаю эту фразу: 'Книга - друг одинокого, а библиотека убежище бездомного'.");
 
                 Program.bot.OnMessage -= ThirdAnswer;
 
@@ -145,7 +140,7 @@ namespace Harry_telegram
                     new KeyboardButton("Окулус Репаро") { Text = "Окулус Репаро"}
                 },
                 new[]{
-                    new KeyboardButton("Пуллус"){ Text = "Пуллус"},
+                    new KeyboardButton("Люмус"){ Text = "Люмус"},
                     new KeyboardButton("Алохомора"){ Text = "Алохомора"}
                 },
             };
@@ -215,7 +210,7 @@ namespace Harry_telegram
 
         private static async void SevenQuestion()
         {
-            await Dialog.SendMessage(Program.chatId, "Гарри: -Просто так не подскажу.\n Сколько человек помещается в главном зале Хогвартс?");
+            await Dialog.SendMessage(Program.chatId, "Гарри: -Просто так не подскажу. Ответь на вопрос.\n Сколько человек помещается в главном зале Хогвартс?");
         }
 
         private static async void EightAnswer(object sender, MessageEventArgs e)
@@ -234,12 +229,14 @@ namespace Harry_telegram
                 {
                     await Dialog.SendMessage(Program.chatId, "Верно! Я видел Хагрида со шляпой у него в хижине. Загляни к нему");
                     await Program.bot.SendDocumentAsync(Program.chatId, "https://media1.giphy.com/media/50YgxbPnjA1LG/giphy.gif");
+
                     Program.bot.OnMessage -= EightAnswer;
                     EightQuestion();
                 }
             }
             catch (Exception)
             {
+                await Dialog.SendMessage(Program.chatId, "Нет такого числа!");
             }
         }
 
@@ -274,10 +271,12 @@ namespace Harry_telegram
             if (answer == "3")
             {
                 await Dialog.SendMessage(Program.chatId, "Именно! Держи шляпу!");
-                await Dialog.SendMessage(Program.chatId, $"Дамблдор: О, ты должно быть {Program.userName}, наш новый ученик. Спасибо тебе! И за первое полезное дело для Хогвартса, возьми себе подарок из коморки только бери справа=)");
+                await Dialog.SendMessage(Program.chatId, $"Дамблдор: О, ты должно быть {Program.userName}, наш новый ученик. Спасибо тебе! И за первое полезное дело для Хогвартса, возьми себе подарок из коморки, только бери справа=)");
                 await Program.bot.SendDocumentAsync(Program.chatId, "http://media.tumblr.com/tumblr_lo5vbgRbdy1qbknh7.gif");
                 Program.bot.OnCallbackQuery -= NineAnswer;
 
+
+                Program.bot.OnMessage += Program.Start;
             }
             else
             {
