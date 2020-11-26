@@ -12,7 +12,7 @@ namespace Harry_telegram
         public static int chatId = 0;
         static void Main(string[] args)
         {
-            bot = new TelegramBotClient("1024216247:AAElTDvwfbrfzeHu8Zy9fIW2PEnjdp1XTfw");
+            bot = new TelegramBotClient("");
             bot.StartReceiving();
             bot.OnMessage += Start;
             
